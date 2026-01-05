@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import java.io.File;
@@ -14,8 +15,18 @@ public class BaseTest {
 
     @BeforeMethod
     public void beforeMethod() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        String isCI = System.getenv("CI");
+
+        if ("true".equalsIgnoreCase(isCI)) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--window-size=1920,1080");
+        }
+
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://digital.harel-group.co.il/travel-policy");
     }
