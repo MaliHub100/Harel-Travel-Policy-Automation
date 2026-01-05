@@ -1,0 +1,16 @@
+# Java/Maven
+/target/
+*.class
+
+# IntelliJ
+/.idea/
+/*.iml
+/out/
+
+# Windows system files
+Thumbs.db
+desktop.ini
+
+# Automation specifics
+/target/screenshots/
+/logs/
